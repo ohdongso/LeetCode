@@ -1,6 +1,6 @@
 package _1_50;
 
-public class _01_두개의합계_무차별대입 {
+public class _01_두개의합계_1무차별대입 {
 
     static class Solution {
 

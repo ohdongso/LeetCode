@@ -3,7 +3,7 @@ package _1_50;
 import java.util.HashMap;
 import java.util.Map;
 
-public class _01_두개의합계_해시테이블 {
+public class _01_두개의합계_2해시테이블 {
 
     static class Solution {
 

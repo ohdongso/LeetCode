@@ -1,6 +1,6 @@
 package _1_50;
 
-public class _01_두개의합계 {
+public class _01_두개의합계_0 {
 
     static class Solution {
 
