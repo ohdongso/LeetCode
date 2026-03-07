@@ -5,5 +5,7 @@
 		- ListNode l1 = new ListNode(2);
           l1.next = new ListNode(4);
           l1.next.next = new ListNode(3);
-        ==> next에 다음 노드를 저장하는 구조
+        ==> next에 다음 노드를 저장하는 
+
+
 
