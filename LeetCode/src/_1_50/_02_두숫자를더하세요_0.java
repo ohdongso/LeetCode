@@ -3,21 +3,36 @@ package _1_50;
 public class _02_두숫자를더하세요_0 {
 	
 	/*
+	 	문제정리
 	 	두 개의 비어 있지 않은 연결 리스트가 존재 순서가 역순으로 저장
 	 	이 경우 역순에서 순방향으로 전환하고 두개의 숫자를 더하는 문제
 	 	
-	 	==> 일단 이코드 분석하고, 이코드에서 dummyHead사용 이유 파악해보자
+	 	Dummy Node 필요성
+	 	더미 노드가 없으면 노드를 삽입할 때마다 현재 리스트의 head가 null인지 확인해야 한다.
+		이렇게 null 여부를 확인하는 이유는 지금 삽입하려는 노드가 첫 번째 노드인지 판단하기 위해서이다.
+		첫 번째 노드라면 head에 직접 할당해야 하고,
+		첫 번째 노드가 아니라면 이전 노드의 next에 연결하는 다른 로직이 필요하다.
+	 	
+	 	Pointer 필요성
+	 	링크드 리스트에 노드를 삽입할 때 현재 마지막 노드의 위치를 포인터가 가리키고 있도록 한다.
+		이렇게 하면 새로운 노드를 쉽게 연결할 수 있고, 
+		노드를 추가할 때마다 포인터를 다음 노드로 이동시켜 계속 리스트의 끝을 관리할 수 있다.
+	 	
+	 	결론:Dummy Node는 첫 노드 예외 처리를 없애기 위해 사용하고, 
+	 	Pointer는 리스트의 마지막 노드를 추적하면서 새로운 노드를 연결하기 위해 사용한다.
 	 */
 	 
     // ListNode 정의
     static class ListNode {
-        int val;
-        ListNode next;
+        int val; // 노드의 실제 값
+        ListNode next; // 노드와 연결 돼 있는 노드의 참조주소를 저장하는 변수
 
+        // 노드의 실제 값을 받는 생성자
         ListNode(int val) {
             this.val = val;
         }
-
+        
+        // 노드의 실제 값과, 다른노드의 참조주소를 받는 생성자
         ListNode(int val, ListNode next) {
             this.val = val;
             this.next = next;
@@ -26,92 +41,34 @@ public class _02_두숫자를더하세요_0 {
 
     static class Solution {
     	
-    	/*
-    		전체 실행 흐름
-    		l1 = 2 → 4 → 3
-			l2 = 5 → 6 → 4
-    		
-    		1번째 반복
-    		2 + 5 = 7
-    		7
-    		
-    		2번째 반복
-    		4 + 6 = 10
-    		0 저장
-			carry = 1
-    		
-    		3번째 반복
-    		3 + 4 + 1 = 8
-    		
-    		마지막 반환
-    		return dummyHead.next;
-    		dummyHead는 가짜 노드이므로 첫 번째 노드를 제외하고 반환합니다.
-    		
-    		이 코드는 LinkedList를 한 칸씩 이동하면서 자리올림(carry)을 계산해 결과 리스트를 만드는 알고리즘입니다.
-    		
-    	 */
-    	
         public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         	
-        	// l1 → 첫 번째 숫자 리스트
-            // l2 → 두 번째 숫자 리스트
-        	
-        	// 결과 리스트를 만들 때 처음 노드를 처리하기 쉽게 하기 위해 가짜 시작 노드를 하나 둡니다.
+        	// 결과 리스트를 만들 때 처음 노드를 처리하기 쉽게 하기 위해 '가짜 시작 노드'를 하나 둡니다.
             ListNode dummyHead = new ListNode(0);
             
             // curr은 현재 결과 리스트의 마지막 노드를 가리키는 포인터입니다.
             ListNode curr = dummyHead;
             
             // carry는 자리 올림 값입니다.
-            /*
-             	예를 들어 > 7 + 5 = 12
-            	2 → 저장
-				1 → carry
-             */
             int carry = 0;
             
-            /*
-            	l1이 남아있다
-				l2가 남아있다
-				carry가 남아있다
-				
-				예를 들어 마지막 계산에서 9 + 9 = 18 이면 carry가 남기 때문에 한 번 더 반복해야 합니다.
-             */
             while (l1 != null || l2 != null || carry != 0) {
-            	
-            	/*
-            		l1이 있으면 값 사용
-					없으면 0 사용
-					
-					예를 들어
-					l1 = null
-					l2 = 5
-					
-					x = 0
-					y = 5
-            	 */
-                int x = (l1 != null) ? l1.val : 0;
-                int y = (l2 != null) ? l2.val : 0;
+                int x = (l1 != null) ? l1.val : 0; // 2,4,3
+                int y = (l2 != null) ? l2.val : 0; // 5,6,4
                 
-                // int sum = x + y + carry;
                 /*
-                	2 + 5 + 0 = 7
+                 	2+5+0=7
+                 	4+6+0=10 > 0, 1
+                 	3+4+1=8
                  */
                 int sum = x + y + carry;
                 
-                // carry = sum / 10;
-                /*
-                 	자리올림 계산
-                	sum = 7 → carry = 0
-					sum = 10 → carry = 1
-					sum = 18 → carry = 1
-                 */
-                carry = sum / 10;
+                carry = sum / 10; // 자리올림 계산
                 
-                // 현재 자리 저장, curr.next = new ListNode(sum % 10);
+                // 0, 7, 0, 8
                 curr.next = new ListNode(sum % 10);
                 
-                // 포인터 이동
+                // 포인터 이동(다음값을 저장해야 하기때문에 이동필요)
                 curr = curr.next;
                 
                 // 입력 리스트 이동
@@ -127,12 +84,12 @@ public class _02_두숫자를더하세요_0 {
 
     	Solution sol = new Solution();
     	
-        // [2,4,3]
+        // (2,4,3)을 연결리스트로 저장
         ListNode l1 = new ListNode(2);
         l1.next = new ListNode(4);
         l1.next.next = new ListNode(3);
 
-        // [5,6,4]
+        // (5,6,4)를 연결리스트로 저장
         ListNode l2 = new ListNode(5);
         l2.next = new ListNode(6);
         l2.next.next = new ListNode(4);
@@ -145,7 +102,5 @@ public class _02_두숫자를더하세요_0 {
             System.out.print(result.val + " ");
             result = result.next;
         }
-
-        // 출력: 7 0 8
     }
 }
