@@ -1,6 +1,6 @@
 package _1_50;
 
-import java.util.HashSet;
+import java.util.HashSet; 
 import java.util.Set;
 
 public class _03_중복문자가없는가장긴부분문자열_0 {
@@ -33,8 +33,8 @@ public class _03_중복문자가없는가장긴부분문자열_0 {
             // 현재 윈도우 안에 포함된 문자 저장
             Set<Character> set = new HashSet<>();
 
-            int left = 0;
-            int maxLength = 0;
+            int left = 0; // 현재 부분 문자열의 시작 위치
+            int maxLength = 0; // 
 
             for (int right = 0; right < s.length(); right++) {
 

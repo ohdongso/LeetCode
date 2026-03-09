@@ -7,5 +7,5 @@
           l1.next.next = new ListNode(3);
         ==> next에 다음 노드를 저장하는 방식
 
-
+●  ●
 
