@@ -61,7 +61,6 @@ public class _03_중복문자가없는가장긴부분문자열_0 {
     }
 
     public static void main(String[] args) {
-
         Solution sol = new Solution();
 
         String s1 = "abcabcbb";
