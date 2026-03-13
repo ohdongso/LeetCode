@@ -1,6 +1,6 @@
 package _1_50;
 
-import java.util.HashSet;
+import java.util.HashSet; 
 import java.util.Set;
 
 public class Main {
@@ -8,7 +8,8 @@ public class Main {
 	static class Solution {
 		
 		 public int lengthOfLongestSubstring(String s) {
-			 Set<Character> set = new HashSet<>(); 
+			
+			 Set<Character> set = new HashSet<Character>();
 			 
 			 int left = 0;
 			 int maxLength = 0;
@@ -49,5 +50,4 @@ public class Main {
         System.out.println("입력: " + s4 + " / 결과: " + sol.lengthOfLongestSubstring(s4)); // 0
         System.out.println("입력: " + s5 + " / 결과: " + sol.lengthOfLongestSubstring(s5)); // 3
 	}
-
 }
