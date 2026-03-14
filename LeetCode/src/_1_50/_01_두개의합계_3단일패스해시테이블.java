@@ -20,8 +20,8 @@ public class _01_두개의합계_3단일패스해시테이블 {
         	
         	for (int i = 0; i < nums.length; i++) {
         		int complement = target - nums[i];
-        		if (map.containsKey(complement)) {
-                    return new int[] { map.get(complement), i };
+        		if (map.containsKey(complement)) { // target에서 뺀 값이 배열에 있다면
+                    return new int[] { map.get(complement), i }; // 뺀값에 해당하는 인덱스, i의값(index) 2개를 반환
                 }
         		map.put(nums[i], i);
         	}

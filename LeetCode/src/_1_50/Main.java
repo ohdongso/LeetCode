@@ -3,7 +3,7 @@ package _1_50;
 import java.util.HashMap;
 import java.util.Map;
 
-import _1_50._01_두개의합계_0.Solution;
+import _1_50.Main.Solution;
 
 public class Main {
 	
@@ -13,15 +13,11 @@ public class Main {
 			Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 			
 			for(int i = 0; i < nums.length; i++) {
-				map.put(nums[i], i);
-			}
-			
-			for(int i = 0; i < nums.length; i++) {
 				int complement = target - nums[i];
-			
-				if(map.containsKey(complement) && map.get(complement) != i) {
-					return new int[] { i, map.get(complement) };
+				if(map.containsKey(complement)) {
+					return new int[] { map.get(complement), i };
 				}
+				map.put(nums[i], i);
 			}
 			
 			return new int[] {};
