@@ -1,5 +1,8 @@
 package _1_50;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import _1_50._01_두개의합계_0.Solution;
 
 public class Main {
@@ -7,14 +10,17 @@ public class Main {
 	static class Solution {
 		
 		public int[] twoSum(int[] nums, int target) {
+			Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 			
-			int leng = nums.length;
+			for(int i = 0; i < nums.length; i++) {
+				map.put(nums[i], i);
+			}
 			
-			for(int i = 0; i < leng - 1; i++) {
-				for(int j = i + 1; i < leng; j++) {
-					if(target == nums[i] + nums[j]) {
-						return new int[] {i, j};
-					}
+			for(int i = 0; i < nums.length; i++) {
+				int complement = target - nums[i];
+			
+				if(map.containsKey(complement) && map.get(complement) != i) {
+					return new int[] { i, map.get(complement) };
 				}
 			}
 			
