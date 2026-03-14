@@ -3,7 +3,7 @@ package _1_50;
 import java.util.HashMap;
 import java.util.Map;
 
-import _1_50.Main.Solution;
+import _1_50._01_두개의합계_0.Solution;
 
 public class Main {
 	
@@ -12,15 +12,16 @@ public class Main {
 		public int[] twoSum(int[] nums, int target) {
 			Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 			
-			for(int i = 0; i < nums.length; i++) {
-				int complement = target - nums[i];
-				if(map.containsKey(complement)) {
-					return new int[] { map.get(complement), i };
-				}
-				map.put(nums[i], i);
-			}
+        	for (int i = 0; i < nums.length; i++) {
+        		int complement = target - nums[i];
+        		if (map.containsKey(complement)) { // target에서 뺀 값이 배열에 있다면
+                    return new int[] { map.get(complement), i }; // 뺀값에 해당하는 인덱스, i의값(index) 2개를 반환
+                }
+        		map.put(nums[i], i);
+        	}
+        	
+        	return new int[] {};
 			
-			return new int[] {};
 		}
 		
 	}

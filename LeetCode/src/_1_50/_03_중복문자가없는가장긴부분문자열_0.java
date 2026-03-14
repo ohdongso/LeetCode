@@ -1,6 +1,6 @@
 package _1_50;
 
-import java.util.HashSet;
+import java.util.HashSet;  
 import java.util.Set;
 
 public class _03_중복문자가없는가장긴부분문자열_0 {
@@ -16,7 +16,7 @@ public class _03_중복문자가없는가장긴부분문자열_0 {
 
         left  : 현재 부분 문자열의 시작 위치
         right : 현재 부분 문자열의 끝 위치
-
+		
         Set 필요성
         현재 부분 문자열 안에 어떤 문자가 들어있는지 빠르게 확인하기 위해 사용한다.
         중복 문자가 들어오면 left를 이동시키면서 중복이 사라질 때까지 제거한다.
@@ -33,12 +33,12 @@ public class _03_중복문자가없는가장긴부분문자열_0 {
             // 현재 윈도우 안에 포함된 문자 저장
             Set<Character> set = new HashSet<>();
 
-            int left = 0;
-            int maxLength = 0;
+            int left = 0; // 현재 부분 문자열의 시작 위치
+            int maxLength = 0; // 지금까지 발견한 가장 긴 길이 저장
 
-            for (int right = 0; right < s.length(); right++) {
+            for (int right = 0; right < s.length(); right++) { // right 포인터가 문자열 끝까지 이동한다.
 
-                char current = s.charAt(right);
+                char current = s.charAt(right); // 현재 문자 가져오기
 
                 // 중복 문자가 있다면 중복이 사라질 때까지 left 이동
                 while (set.contains(current)) {
@@ -49,7 +49,7 @@ public class _03_중복문자가없는가장긴부분문자열_0 {
                 // 중복이 없는 상태가 되었으므로 현재 문자 추가
                 set.add(current);
 
-                // 현재 윈도우 길이 계산
+                // 현재 윈도우(중복되지 않은 문자열) 길이 계산
                 int length = right - left + 1;
 
                 // 최대 길이 갱신
@@ -61,7 +61,6 @@ public class _03_중복문자가없는가장긴부분문자열_0 {
     }
 
     public static void main(String[] args) {
-
         Solution sol = new Solution();
 
         String s1 = "abcabcbb";
