@@ -1,9 +1,7 @@
 package _1_50;
 
-import java.util.HashMap;
+import java.util.HashMap; 
 import java.util.Map;
-
-import _1_50._01_두개의합계_0.Solution;
 
 public class Main {
 	
