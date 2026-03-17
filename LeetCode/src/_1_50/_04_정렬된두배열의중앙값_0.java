@@ -34,7 +34,7 @@ public class _04_정렬된두배열의중앙값_0 {
             if (nums1.length > nums2.length) {
                 return findMedianSortedArrays(nums2, nums1);
             }
-            
+             
             // 각 배열의 길이 저장
             int m = nums1.length;
             int n = nums2.length;
