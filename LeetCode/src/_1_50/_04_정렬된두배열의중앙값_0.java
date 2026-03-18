@@ -30,51 +30,50 @@ public class _04_정렬된두배열의중앙값_0 {
     	
         public double findMedianSortedArrays(int[] nums1, int[] nums2) {
 
-            // 항상 nums1이 더 작은 배열이 되도록 설정
-            if (nums1.length > nums2.length) {
-                return findMedianSortedArrays(nums2, nums1);
-            }
-            
-            // 각 배열의 길이 저장
-            int m = nums1.length;
-            int n = nums2.length;
+        	// nums1이 항상 더 짧은 배열이 되도록 맞춤
+        	if (nums1.length > nums2.length) {
+        	    return findMedianSortedArrays(nums2, nums1);
+        	}
 
-            int left = 0;
-            int right = m;
+        	int m = nums1.length;
+        	int n = nums2.length;
 
-            while (left <= right) {
+        	// nums1에서 왼쪽에 둘 원소 개수를 이진탐색
+        	int left = 0;
+        	int right = m;
 
-                int i = (left + right) / 2;
-                int j = (m + n + 1) / 2 - i;
+        	while (left <= right) {
+        	    // nums1의 분할 위치
+        	    int i = (left + right) / 2;
 
-                int maxLeft1 = (i == 0) ? Integer.MIN_VALUE : nums1[i - 1];
-                int minRight1 = (i == m) ? Integer.MAX_VALUE : nums1[i];
+        	    // 전체 왼쪽 원소 개수를 맞추기 위한 nums2의 분할 위치
+        	    int j = (m + n + 1) / 2 - i;
 
-                int maxLeft2 = (j == 0) ? Integer.MIN_VALUE : nums2[j - 1];
-                int minRight2 = (j == n) ? Integer.MAX_VALUE : nums2[j];
+        	    // 각 분할 경계값
+        	    int maxLeft1 = (i == 0) ? Integer.MIN_VALUE : nums1[i - 1];
+        	    int minRight1 = (i == m) ? Integer.MAX_VALUE : nums1[i];
+        	    int maxLeft2 = (j == 0) ? Integer.MIN_VALUE : nums2[j - 1];
+        	    int minRight2 = (j == n) ? Integer.MAX_VALUE : nums2[j];
 
-                // 올바른 분할 찾은 경우
-                if (maxLeft1 <= minRight2 && maxLeft2 <= minRight1) {
+        	    // 왼쪽 전체 <= 오른쪽 전체 이면 올바른 분할
+        	    if (maxLeft1 <= minRight2 && maxLeft2 <= minRight1) {
+        	        // 홀수면 왼쪽 최대값이 중앙값
+        	        if ((m + n) % 2 == 1) {
+        	            return Math.max(maxLeft1, maxLeft2);
+        	        }
 
-                    // 전체 길이가 홀수
-                    if ((m + n) % 2 == 1) {
-                        return Math.max(maxLeft1, maxLeft2);
-                    }
-
-                    // 짝수
-                    return (Math.max(maxLeft1, maxLeft2) + Math.min(minRight1, minRight2)) / 2.0;
-                }
-
-                // 왼쪽으로 이동
-                else if (maxLeft1 > minRight2) {
-                    right = i - 1;
-                }
-
-                // 오른쪽으로 이동
-                else {
-                    left = i + 1;
-                }
-            }
+        	        // 짝수면 중앙 두 값의 평균
+        	        return (Math.max(maxLeft1, maxLeft2) + Math.min(minRight1, minRight2)) / 2.0;
+        	    }
+        	    // nums1 왼쪽 값이 너무 크면 분할을 왼쪽으로 이동
+        	    else if (maxLeft1 > minRight2) {
+        	        right = i - 1;
+        	    }
+        	    // nums1 왼쪽 값이 더 필요하면 분할을 오른쪽으로 이동
+        	    else {
+        	        left = i + 1;
+        	    }
+        	}
 
             return 0.0;
         }
