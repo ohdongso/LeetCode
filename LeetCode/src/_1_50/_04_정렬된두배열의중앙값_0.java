@@ -40,7 +40,7 @@ public class _04_정렬된두배열의중앙값_0 {
 
         	// nums1에서 왼쪽에 둘 원소 개수를 이진탐색
         	int left = 0;
-        	int right = m;
+        	int right = m; // 짧은 쪽 배열길이 저장
 
         	while (left <= right) {
         	    // nums1의 분할 위치
