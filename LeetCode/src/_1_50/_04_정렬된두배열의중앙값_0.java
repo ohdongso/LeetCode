@@ -3,77 +3,96 @@ package _1_50;
 public class _04_정렬된두배열의중앙값_0 {
 
     static class Solution {
-    	
-    	/*
-    	 	● 내가 생각한 문제풀이 방법
-    	 	2개의 배열을 받게 되는데, 2개의 배열을 함친 뒤 오름차순 정렬하고
-    	 	짝수면 중앙 2개의 값을 더한 뒤 2를 나눈값을, 홀수면 중앙값을 그대로 출력
-    	 	
-    	 	● AI풀이 방법
-    	 	두 배열은 이미 오름차순 정렬되어 있기 때문에 전체를 합쳐서 정렬할 필요 없이
-	        이진탐색을 이용하여 두 배열을 적절한 위치에서 나눈다 (partition).
-	
-	        이때 왼쪽 부분과 오른쪽 부분으로 나누었을 때
-	        왼쪽의 모든 값이 오른쪽의 값보다 작거나 같도록 만드는 것이 핵심이다.
-	
-	        조건:왼쪽 최대값 ≤ 오른쪽 최소값
-	        위 조건을 만족하는 분할 위치를 찾으면 중앙값을 바로 구할 수 있다.
-	
-	        - 전체 길이가 홀수일 경우:
-	          → 왼쪽 부분의 최대값이 중앙값
-	
-	        - 전체 길이가 짝수일 경우:
-	          → (왼쪽 최대값 + 오른쪽 최소값) / 2
-	
-	        이 과정을 작은 배열 기준으로 이진탐색하여 O(log(m+n)) 시간복잡도로 해결한다.
-    	 */
-    	
+
+        /*
+         ● 내가 처음 생각한 방법
+         두 배열을 하나로 합친 뒤 정렬해서 중앙값을 구한다.
+         - 홀수 길이: 가운데 값 반환
+         - 짝수 길이: 가운데 두 값의 평균 반환
+         → 시간복잡도: O((m+n) log(m+n))
+
+         ● 최적 풀이 (이진탐색)
+         두 배열을 실제로 합치지 않고, 각 배열을 왼쪽 / 오른쪽 파티션으로 나눠 중앙값을 찾는다.
+
+         핵심 아이디어
+         - 두 배열을 나눴을 때 왼쪽 그룹의 모든 값 ≤ 오른쪽 그룹의 모든 값이 되도록 분할한다.
+         - 올바른 분할이 되면 중앙값은 경계값만으로 바로 구할 수 있다.
+
+         중앙값 구하는 방법
+         - 전체 길이가 홀수이면 → 왼쪽 그룹의 최대값
+         - 전체 길이가 짝수이면 → (왼쪽 그룹의 최대값 + 오른쪽 그룹의 최소값) / 2
+
+         시간복잡도
+         - 작은 배열 기준으로 이진탐색하므로 O(log(min(m, n)))
+        */
         public double findMedianSortedArrays(int[] nums1, int[] nums2) {
 
-        	// nums1이 항상 더 짧은 배열이 되도록 맞춤
-        	if (nums1.length > nums2.length) {
-        	    return findMedianSortedArrays(nums2, nums1);
-        	}
+            // 이진탐색 범위를 최소화하기 위해 항상 nums1을 더 짧은 배열로 맞춘다.
+            if (nums1.length > nums2.length) {
+                return findMedianSortedArrays(nums2, nums1);
+            }
 
-        	int m = nums1.length;
-        	int n = nums2.length;
+            int m = nums1.length;
+            int n = nums2.length;
 
-        	// nums1에서 왼쪽에 둘 원소 개수를 이진탐색
-        	int left = 0;
-        	int right = m; // 짧은 쪽 배열길이 저장
+            // nums1(짧은 배열)에서 왼쪽 파티션 개수를 이진탐색으로 찾는다.
+            int left = 0;
+            int right = m;
 
-        	while (left <= right) {
-        	    // nums1의 분할 위치
-        	    int i = (left + right) / 2;
+            while (left <= right) {
 
-        	    // 전체 왼쪽 원소 개수를 맞추기 위한 nums2의 분할 위치
-        	    int j = (m + n + 1) / 2 - i;
+                // i: nums1(짧은 배열)의 왼쪽 파티션 개수
+                int i = (left + right) / 2;
 
-        	    // 각 분할 경계값
-        	    int maxLeft1 = (i == 0) ? Integer.MIN_VALUE : nums1[i - 1];
-        	    int minRight1 = (i == m) ? Integer.MAX_VALUE : nums1[i];
-        	    int maxLeft2 = (j == 0) ? Integer.MIN_VALUE : nums2[j - 1];
-        	    int minRight2 = (j == n) ? Integer.MAX_VALUE : nums2[j];
+                // 전체 왼쪽 파티션 개수 = (m + n + 1) / 2
+                // 전체 왼쪽 개수에서 nums1의 왼쪽 개수(i)를 제외하면
+                // nums2의 왼쪽 파티션 개수(j)가 된다.
+                int j = (m + n + 1) / 2 - i;
 
-        	    // 왼쪽 전체 <= 오른쪽 전체 이면 올바른 분할
-        	    if (maxLeft1 <= minRight2 && maxLeft2 <= minRight1) {
-        	        // 홀수면 왼쪽 최대값이 중앙값
-        	        if ((m + n) % 2 == 1) {
-        	            return Math.max(maxLeft1, maxLeft2);
-        	        }
+                // nums1 왼쪽 파티션의 마지막 값 (= 왼쪽 파티션의 최대값, 없으면 -∞ 처리)
+                int maxLeft1 = (i == 0) ? Integer.MIN_VALUE : nums1[i - 1];
 
-        	        // 짝수면 중앙 두 값의 평균
-        	        return (Math.max(maxLeft1, maxLeft2) + Math.min(minRight1, minRight2)) / 2.0;
-        	    }
-        	    // nums1 왼쪽 값이 너무 크면 분할을 왼쪽으로 이동
-        	    else if (maxLeft1 > minRight2) {
-        	        right = i - 1;
-        	    }
-        	    // nums1 왼쪽 값이 더 필요하면 분할을 오른쪽으로 이동
-        	    else {
-        	        left = i + 1;
-        	    }
-        	}
+                // nums1 오른쪽 파티션의 첫 번째 값 (= 오른쪽 파티션의 최소값, 없으면 +∞ 처리)
+                int minRight1 = (i == m) ? Integer.MAX_VALUE : nums1[i];
+
+                // nums2 왼쪽 파티션의 마지막 값 (= 왼쪽 파티션의 최대값, 없으면 -∞ 처리)
+                int maxLeft2 = (j == 0) ? Integer.MIN_VALUE : nums2[j - 1];
+
+                // nums2 오른쪽 파티션의 첫 번째 값 (= 오른쪽 파티션의 최소값, 없으면 +∞ 처리)
+                int minRight2 = (j == n) ? Integer.MAX_VALUE : nums2[j];
+
+                // 올바른 분할인지 확인
+                // 1) nums1 왼쪽 최대값 ≤ nums2 오른쪽 최소값
+                // 2) nums2 왼쪽 최대값 ≤ nums1 오른쪽 최소값
+                // 위 두 조건이 모두 만족되면 전체 왼쪽 그룹 ≤ 전체 오른쪽 그룹이 성립한다.
+                if (maxLeft1 <= minRight2 && maxLeft2 <= minRight1) {
+
+                    // 전체 길이가 홀수이면 왼쪽 그룹이 1개 더 많으므로
+                    // 왼쪽 그룹의 최대값이 중앙값이 된다.
+                    if ((m + n) % 2 == 1) {
+                        return Math.max(maxLeft1, maxLeft2);
+                    }
+
+                    // 전체 길이가 짝수이면
+                    // 중앙의 두 값은 왼쪽 그룹의 최대값과 오른쪽 그룹의 최소값이다.
+                    return (Math.max(maxLeft1, maxLeft2)
+                            + Math.min(minRight1, minRight2)) / 2.0;
+                }
+
+                // nums1 왼쪽 최대값이 nums2 오른쪽 최소값보다 크면
+                // nums1의 왼쪽 파티션에 큰 값이 너무 많이 포함된 상태이므로
+                // i를 줄여 파티션을 왼쪽으로 이동한다.
+                else if (maxLeft1 > minRight2) {
+                    right = i - 1;
+                }
+
+                // nums2 왼쪽 최대값이 nums1 오른쪽 최소값보다 크면
+                // nums1의 왼쪽 파티션에 값이 부족한 상태이므로
+                // i를 늘려 파티션을 오른쪽으로 이동한다.
+                else {
+                    left = i + 1;
+                }
+            }
 
             return 0.0;
         }
