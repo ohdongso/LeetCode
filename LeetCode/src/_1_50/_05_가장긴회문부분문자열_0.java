@@ -12,14 +12,17 @@ public class _05_가장긴회문부분문자열_0 {
 			
         	시간복잡도: O(n^2)
         	공간복잡도: O(1)
+        	
+        	앞에서 읽든 뒤에서 읽은 똑같은것 == 회문
     	*/
-        public String longestPalindrome(String s) {
+        public String longestPalindrome(String s) { 
 
             // 길이가 1 이하이면 그대로 반환
             if (s == null || s.length() < 2) {
                 return s;
             }
-
+            
+            // 현재까지 찾은 가장 긴 회문의 시작 위치와 끝 위치
             int start = 0; // 가장 긴 회문의 시작 인덱스
             int end = 0;   // 가장 긴 회문의 끝 인덱스
 
