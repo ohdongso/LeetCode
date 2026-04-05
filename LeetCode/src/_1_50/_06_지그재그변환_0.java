@@ -46,9 +46,16 @@ public class _06_지그재그변환_0 {
             }
 
             // 각 행의 문자열을 저장할 StringBuilder 배열 생성
+            /*
+            	rows[0] = "PAHN"
+				rows[1] = "APLSIIG"
+				rows[2] = "YIR"
+             */
             StringBuilder[] rows = new StringBuilder[numRows];
 
             // 각 행마다 StringBuilder 초기화
+            // 배열만 만들었다고 해서 바로 문자열을 붙일 수 있는 건 아님
+            // 각 칸에 실제 StringBuilder 객체를 넣어줘야 함
             for (int i = 0; i < numRows; i++) {
                 rows[i] = new StringBuilder();
             }
@@ -74,15 +81,18 @@ public class _06_지그재그변환_0 {
                     0 -> 1 -> 2 -> 1 -> 0 -> 1 -> 2 ...
                     이런 식으로 움직이게 된다.
                 */
+                // currentRow가 시작값 이거나 끝값이면, 방향 flag변수 반전
                 if (currentRow == 0 || currentRow == numRows - 1) {
                     goingDown = !goingDown;
                 }
 
                 // 현재 방향에 따라 다음 행으로 이동
+                // currentRow가 시작이나 끝값이라서 반전이 일어나면 현재행의 값을 증가시키거나 감소시키는 부분이 필요
                 currentRow += goingDown ? 1 : -1;
             }
 
             // 각 행에 저장된 문자열을 위에서부터 순서대로 합침
+            // 각 행의 배열을 한개의 StringBuilder에 합친다.
             StringBuilder result = new StringBuilder();
             for (StringBuilder row : rows) {
                 result.append(row);
