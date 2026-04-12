@@ -30,10 +30,10 @@ public class _08_문자열을정수로변환_atoi_0 {
 
             int index = 0;
             int n = s.length();
-            int sign = 1;     // 기본은 양수
+            int sign = 1;     // 기본 부호는 양수
             int result = 0;
 
-            // 1. 앞 공백 제거
+            // 1. 앞쪽 공백 제거 (유효한 입력 시작 위치 찾기)
             while (index < n && s.charAt(index) == ' ') {
                 index++;
             }
@@ -43,7 +43,7 @@ public class _08_문자열을정수로변환_atoi_0 {
                 return 0;
             }
 
-            // 2. 부호 확인
+            // 2. 부호 확인 (+ 또는 -)
             if (s.charAt(index) == '+') {
                 index++;
             } else if (s.charAt(index) == '-') {
@@ -51,19 +51,18 @@ public class _08_문자열을정수로변환_atoi_0 {
                 index++;
             }
 
-            // 3. 숫자 읽기
+            // 3. 숫자만 읽어서 정수로 변환
             while (index < n) {
                 char ch = s.charAt(index);
 
-                // 숫자가 아니면 중지
+                // 숫자가 아니면 변환 중단
                 if (ch < '0' || ch > '9') {
                     break;
                 }
 
                 int digit = ch - '0';
 
-                // 4. overflow 체크
-                // result * 10 + digit 이 int 범위를 넘는지 사전 검사
+                // 4. 다음 연산(result * 10 + digit) 수행 시 overflow 여부 사전 체크
                 if (result > Integer.MAX_VALUE / 10 ||
                    (result == Integer.MAX_VALUE / 10 && digit > 7)) {
 
@@ -71,12 +70,12 @@ public class _08_문자열을정수로변환_atoi_0 {
                     return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
                 }
 
-                // 숫자 누적
+                // 숫자 누적 (자릿수 확장)
                 result = result * 10 + digit;
                 index++;
             }
 
-            // 5. 부호 적용 후 반환
+            // 5. 최종 결과에 부호 적용 후 반환
             return result * sign;
         }
     }
@@ -85,11 +84,17 @@ public class _08_문자열을정수로변환_atoi_0 {
 
         Solution sol = new Solution();
 
-        System.out.println(sol.myAtoi("42"));         // 42
-        System.out.println(sol.myAtoi("   -42"));     // -42
-        System.out.println(sol.myAtoi("1337c0d3"));   // 1337
-        System.out.println(sol.myAtoi("0-1"));        // 0
-        System.out.println(sol.myAtoi("words 987"));  // 0
+        /*
+            [main 역할]
+            - myAtoi() 메서드 테스트
+            - 다양한 입력값으로 정상 동작 및 overflow 확인
+        */
+
+        System.out.println(sol.myAtoi("42"));           // 42
+        System.out.println(sol.myAtoi("   -42"));       // -42
+        System.out.println(sol.myAtoi("1337c0d3"));     // 1337
+        System.out.println(sol.myAtoi("0-1"));          // 0
+        System.out.println(sol.myAtoi("words 987"));    // 0
         System.out.println(sol.myAtoi("-91283472332")); // -2147483648
     }
 }
