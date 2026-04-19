@@ -31,7 +31,7 @@ public class _08_문자열을정수로변환_atoi_0 {
         */
         public int myAtoi(String s) {
 
-            int index = 0;
+            int index = 0; // 현재 위치 포인터
             int n = s.length();
 
             // sign:
@@ -46,11 +46,13 @@ public class _08_문자열을정수로변환_atoi_0 {
 
             // 1. 앞쪽 공백 제거
             // 숫자 변환에 의미 없는 선행 공백은 모두 건너뛴다.
+            // 처음 시작하는 숫자 위치를 구한다.
             while (index < n && s.charAt(index) == ' ') {
                 index++;
             }
 
             // 공백만 있는 문자열이면 변환할 숫자가 없으므로 0 반환
+            // index는 처음 시작하는 문자열을 나타내는 포인터기 때문에 n과 같다면, 공백만 있는 문자열을 의미
             if (index == n) {
                 return 0;
             }
