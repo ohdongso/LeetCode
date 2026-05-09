@@ -11,9 +11,29 @@
           l1.next = new ListNode(4);
           l1.next.next = new ListNode(3);
         ==> next에 다음 노드를 저장하는 방식
+● 동적계획법(DP) ●
+	- 
+  
+  
         
 ● 공간복잡도 ●
 ● 시간복잡도 ●
 ● 이진탐색 ●
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

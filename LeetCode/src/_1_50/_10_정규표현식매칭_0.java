@@ -3,7 +3,7 @@ package _1_50;
 public class _10_정규표현식매칭_0 {
 
     static class Solution {
-
+    	
         /*
             [문제 설명]
             문자열 s와 패턴 p가 주어졌을 때,
@@ -41,8 +41,8 @@ public class _10_정규표현식매칭_0 {
          */
         public boolean isMatch(String s, String p) {
 
-            int m = s.length();
-            int n = p.length();
+            int m = s.length(); // 입력 받은 "문자열" 길이
+            int n = p.length(); // 입력 받은 "정규식" 길이
             
             // 문자열 s와 패턴 p의 매칭 상태를 저장하는 표
             boolean[][] dp = new boolean[m + 1][n + 1];
@@ -51,6 +51,7 @@ public class _10_정규표현식매칭_0 {
             dp[0][0] = true;
 
             // s는 비어있고, p만 있는 경우 (a*, a*b*, ...)
+            // 2026-05-09 >>> 여기서부터 내일 시작
             for (int j = 2; j <= n; j++) {
                 if (p.charAt(j - 1) == '*') {
                     dp[0][j] = dp[0][j - 2];
