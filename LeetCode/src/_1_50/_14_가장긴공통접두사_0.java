@@ -60,8 +60,7 @@ public class _14_가장긴공통접두사_0 {
 
                         지금까지의 접두사 반환
                     */
-                    if (i >= strs[j].length()
-                            || strs[j].charAt(i) != current) {
+                    if (i >= strs[j].length() || strs[j].charAt(i) != current) {
 
                         return first.substring(0, i);
                     }
@@ -77,19 +76,13 @@ public class _14_가장긴공통접두사_0 {
 
         Solution sol = new Solution();
 
-        System.out.println(
-                sol.longestCommonPrefix(
-                        new String[]{"flower", "flow", "flight"}));
+        System.out.println(sol.longestCommonPrefix(new String[]{"flower", "flow", "flight"}));
         // fl
 
-        System.out.println(
-                sol.longestCommonPrefix(
-                        new String[]{"dog", "racecar", "car"}));
+        System.out.println(sol.longestCommonPrefix(new String[]{"dog", "racecar", "car"}));
         // ""
 
-        System.out.println(
-                sol.longestCommonPrefix(
-                        new String[]{"abc", "abc", "abc"}));
+        System.out.println(sol.longestCommonPrefix(new String[]{"abc", "abc", "abc"}));
         // abc
     }
 }
