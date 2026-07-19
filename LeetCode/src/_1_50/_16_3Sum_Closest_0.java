@@ -6,31 +6,29 @@ public class _16_3Sum_Closest_0 {
 
     static class Solution {
 
-        /*
-            [문제 분석]
-
-            정수 배열 nums에서 서로 다른 인덱스의 세 수를 골라
-            그 합이 target에 가장 가까운 값을 찾는 문제이다.
-
-            예)
-            nums = [-1, 2, 1, -4], target = 1
-            가능한 세 수의 합 중 target 1에 가장 가까운 값은 2이다.
-            (-1 + 2 + 1 = 2)
-
-            [풀이 흐름]
-
-            1. 배열을 오름차순 정렬한다.
-            2. i를 기준값으로 고정한다.
-            3. 기준값 오른쪽에서 left, right 투 포인터를 사용한다.
-            4. 현재 합 sum과 target의 차이를 비교한다.
-            5. 더 가까운 합이면 answer를 갱신한다.
-            6. sum < target 이면 left++
-            7. sum > target 이면 right--
-            8. sum == target 이면 가장 가까운 값이므로 바로 return 한다.
-
-            시간 복잡도 : O(n²)
-        */
         public int threeSumClosest(int[] nums, int target) {
+
+            /*
+                [알고리즘 순서]
+
+                ① 배열을 오름차순으로 정렬한다.
+                      ↓
+                ② 하나의 원소(i)를 기준값으로 고정한다.
+                      ↓
+                ③ 나머지 두 수는 left / right 투 포인터로 탐색한다.
+                      ↓
+                ④ 현재 합(sum)이 target보다 작으면
+                   left를 증가시켜 더 큰 합을 만든다.
+                      ↓
+                ⑤ 현재 합(sum)이 target보다 크면
+                   right를 감소시켜 더 작은 합을 만든다.
+                      ↓
+                ⑥ target과의 차이가 가장 작은 합을
+                   answer에 계속 갱신한다.
+                      ↓
+                ⑦ sum == target 이면 가장 가까운 값이므로
+                   바로 반환(return)한다.
+            */
 
             Arrays.sort(nums);
 
@@ -72,5 +70,8 @@ public class _16_3Sum_Closest_0 {
 
         System.out.println(sol.threeSumClosest(new int[]{0, 0, 0}, 1));
         // 0
+
+        System.out.println(sol.threeSumClosest(new int[]{1, 1, 1, 0}, -100));
+        // 2
     }
 }
