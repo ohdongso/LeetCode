@@ -1,3 +1,4 @@
+
 package _1_50;
 
 import java.util.ArrayList;
@@ -11,19 +12,19 @@ public class _18_4Sum_0 {
         /*
          * [LeetCode 18 - 4Sum]
          *
-         * 숫자 4개의 합이 target이 되는 모든 조합을 찾는다.
+         * 서로 다른 인덱스의 숫자 4개를 선택하여
+         * 합이 target인 중복 없는 조합을 찾는다.
          *
-         * [풀이 흐름]
+         * [전체 흐름]
+         * 1. 배열을 오름차순 정렬
+         * 2. 이중 for문으로 i, j 고정
+         * 3. left, right 투 포인터로 나머지 2개 탐색
+         * 4. sum과 target을 비교하여 포인터 이동
+         * 5. 정답 저장 및 중복 제거
          *
-         * 1. 배열을 오름차순으로 정렬
-         * 2. i, j로 숫자 2개를 고정
-         * 3. 나머지 2개는 left, right Two Pointer로 탐색
-         *
-         * sum == target → 정답 저장
+         * sum == target → 정답 저장 후 양쪽 이동
          * sum < target  → left++
          * sum > target  → right--
-         *
-         * 같은 조합이 여러 번 나오지 않도록 중복값은 건너뛴다.
          *
          * 시간 복잡도 : O(N^3)
          */
@@ -32,15 +33,15 @@ public class _18_4Sum_0 {
 
             List<List<Integer>> result = new ArrayList<>();
 
-            // 숫자 4개를 만들 수 없는 경우
+            // 숫자가 4개 미만이면 종료
             if (nums == null || nums.length < 4) {
                 return result;
             }
 
-            // Two Pointer 사용을 위해 오름차순 정렬
+            // 투 포인터 탐색을 위해 오름차순 정렬
             Arrays.sort(nums);
 
-            // 첫 번째 숫자 선택
+            // 첫 번째 숫자 고정
             for (int i = 0; i < nums.length - 3; i++) {
 
                 // i 중복 제거
@@ -48,7 +49,7 @@ public class _18_4Sum_0 {
                     continue;
                 }
 
-                // 두 번째 숫자 선택
+                // 두 번째 숫자 고정
                 for (int j = i + 1; j < nums.length - 2; j++) {
 
                     // j 중복 제거
@@ -56,13 +57,13 @@ public class _18_4Sum_0 {
                         continue;
                     }
 
-                    // 나머지 두 숫자는 Two Pointer로 탐색
+                    // j 오른쪽 구간에서 투 포인터 탐색
                     int left = j + 1;
                     int right = nums.length - 1;
 
                     while (left < right) {
 
-                        // 숫자 4개의 합
+                        // 네 숫자의 합 (오버플로 방지)
                         long sum = (long) nums[i]
                                 + nums[j]
                                 + nums[left]
@@ -70,7 +71,7 @@ public class _18_4Sum_0 {
 
                         if (sum == target) {
 
-                            // target과 같으면 정답 저장
+                            // 정답 저장
                             result.add(Arrays.asList(
                                     nums[i],
                                     nums[j],
@@ -78,16 +79,17 @@ public class _18_4Sum_0 {
                                     nums[right]
                             ));
 
+                            // 다른 조합 탐색
                             left++;
                             right--;
 
-                            // left 중복 제거
+                            // left 중복값 건너뛰기
                             while (left < right
                                     && nums[left] == nums[left - 1]) {
                                 left++;
                             }
 
-                            // right 중복 제거
+                            // right 중복값 건너뛰기
                             while (left < right
                                     && nums[right] == nums[right + 1]) {
                                 right--;
@@ -95,12 +97,12 @@ public class _18_4Sum_0 {
 
                         } else if (sum < target) {
 
-                            // 합이 작으면 더 큰 값이 필요
+                            // 합이 작으면 큰 숫자 방향으로 이동
                             left++;
 
                         } else {
 
-                            // 합이 크면 더 작은 값이 필요
+                            // 합이 크면 작은 숫자 방향으로 이동
                             right--;
                         }
                     }
@@ -110,7 +112,6 @@ public class _18_4Sum_0 {
             return result;
         }
     }
-
 
     public static void main(String[] args) {
 
@@ -124,7 +125,6 @@ public class _18_4Sum_0 {
 
         // 예상 결과
         // [[-2, -1, 1, 2], [-2, 0, 0, 2], [-1, 0, 0, 1]]
-
 
         // 예제 2
         int[] nums2 = {2, 2, 2, 2, 2};
