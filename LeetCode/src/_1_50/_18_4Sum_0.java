@@ -31,9 +31,10 @@ public class _18_4Sum_0 {
 
         public List<List<Integer>> fourSum(int[] nums, int target) {
 
+            // 조건을 만족하는 숫자 4개의 조합을 저장
             List<List<Integer>> result = new ArrayList<>();
 
-            // 숫자가 4개 미만이면 종료
+            // 배열이 null이거나 숫자가 4개 미만이면 종료
             if (nums == null || nums.length < 4) {
                 return result;
             }
@@ -41,18 +42,18 @@ public class _18_4Sum_0 {
             // 투 포인터 탐색을 위해 오름차순 정렬
             Arrays.sort(nums);
 
-            // 첫 번째 숫자 고정
+            // 첫 번째 숫자 고정 (오른쪽에 최소 3개 필요)
             for (int i = 0; i < nums.length - 3; i++) {
 
-                // i 중복 제거
+                // 첫 번째 i는 허용, 이후 같은 값이면 건너뛰기
                 if (i > 0 && nums[i] == nums[i - 1]) {
                     continue;
                 }
 
-                // 두 번째 숫자 고정
+                // 두 번째 숫자 고정 (i 다음부터, 오른쪽에 최소 2개 필요)
                 for (int j = i + 1; j < nums.length - 2; j++) {
 
-                    // j 중복 제거
+                    // 첫 번째 j는 허용, 이후 같은 값이면 건너뛰기
                     if (j > i + 1 && nums[j] == nums[j - 1]) {
                         continue;
                     }
@@ -71,7 +72,7 @@ public class _18_4Sum_0 {
 
                         if (sum == target) {
 
-                            // 정답 저장
+                            // 정답 조합 저장
                             result.add(Arrays.asList(
                                     nums[i],
                                     nums[j],
