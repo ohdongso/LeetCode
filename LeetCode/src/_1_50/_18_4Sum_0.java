@@ -31,18 +31,44 @@ public class _18_4Sum_0 {
 
         public List<List<Integer>> fourSum(int[] nums, int target) {
 
-            // 조건을 만족하는 숫자 4개의 조합을 저장
+            /*
+             * [학습 완료]
+             * List<List<Integer>> : List 안에 List가 있는 구조
+             * 각 내부 List에는 숫자 4개의 조합이 저장됨
+             * 현재는 빈 리스트만 생성
+             */
             List<List<Integer>> result = new ArrayList<>();
 
-            // 배열이 null이거나 숫자가 4개 미만이면 종료
+            /*
+             * [학습 완료 - 방어 코드]
+             * nums == null   : 배열 참조가 없는 경우
+             * nums.length < 4 : 숫자가 4개 미만인 경우
+             *
+             * || : OR 연산자 (단락 평가)
+             * 앞 조건이 true면 뒤 조건은 검사하지 않음
+             * 조건에 해당하면 빈 result 반환 후 종료
+             */
             if (nums == null || nums.length < 4) {
                 return result;
             }
 
-            // 투 포인터 탐색을 위해 오름차순 정렬
+            /*
+             * [학습 완료 - 오름차순 정렬]
+             * 정렬을 통해 숫자의 크기 순서를 보장
+             * 투 포인터 이동 방향을 판단할 수 있음
+             *
+             * sum < target → left++ (합 증가)
+             * sum > target → right-- (합 감소)
+             *
+             * 불필요한 탐색을 줄이기 위한 정렬
+             */
             Arrays.sort(nums);
 
-            // 첫 번째 숫자 고정 (오른쪽에 최소 3개 필요)
+            /*
+             * [다음 학습 시작 위치]
+             * 첫 번째 숫자 i 고정
+             * 왜 nums.length - 3인지 분석 예정
+             */
             for (int i = 0; i < nums.length - 3; i++) {
 
                 // 첫 번째 i는 허용, 이후 같은 값이면 건너뛰기
@@ -50,7 +76,7 @@ public class _18_4Sum_0 {
                     continue;
                 }
 
-                // 두 번째 숫자 고정 (i 다음부터, 오른쪽에 최소 2개 필요)
+                // 두 번째 숫자 고정 (오른쪽에 최소 2개 필요)
                 for (int j = i + 1; j < nums.length - 2; j++) {
 
                     // 첫 번째 j는 허용, 이후 같은 값이면 건너뛰기
@@ -116,9 +142,22 @@ public class _18_4Sum_0 {
 
     public static void main(String[] args) {
 
+        /*
+         * [학습 완료 - 객체 생성]
+         * fourSum()은 static이 없는 인스턴스 메서드
+         * 호출하기 위해 Solution 객체 생성
+         *
+         * 하나의 객체로 같은 메서드를 여러 번 호출 가능
+         */
         Solution sol = new Solution();
 
-        // 예제 1
+        /*
+         * [학습 완료 - 예제 1]
+         * nums1   : 정수 배열 (지역 변수)
+         * target1 : 목표 합계 (지역 변수)
+         *
+         * fourSum()에 배열과 목표값을 인자로 전달
+         */
         int[] nums1 = {1, 0, -1, 0, -2, 2};
         int target1 = 0;
 
@@ -127,7 +166,11 @@ public class _18_4Sum_0 {
         // 예상 결과
         // [[-2, -1, 1, 2], [-2, 0, 0, 2], [-1, 0, 0, 1]]
 
-        // 예제 2
+        /*
+         * [학습 완료 - 예제 2]
+         * 같은 객체와 메서드를 재사용
+         * 서로 다른 배열과 목표값을 전달
+         */
         int[] nums2 = {2, 2, 2, 2, 2};
         int target2 = 8;
 
